@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ansh Gupta — Data Analyst Portfolio Report</title>
+  <meta name="description" content="Portfolio of Ansh Gupta, Data Analyst specializing in SQL, Python, Power BI, Excel VBA, ETL pipelines, and statistical analysis.">
+  
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES (Alternating Slate Charcoal & Off-White)
+       ========================================================================== */
+    :root {
+      --slate-dark: #3B4650;
+      --slate-deeper: #2B353E;
+      --slate-card: #34404A;
+      --slate-light: #5B6A77;
+      --slate-border: #4D5C6B;
+      --paper: #F4F6F7;
+      --panel: #FFFFFF;
+      --ink: #1A232C;
+      --ink-soft: #4A5662;
+      --ink-light: #F0F4F7;
+      --ink-muted: #9BA8B4;
+      --grid: #D5DCE2;
+      --grid-dark: rgba(255, 255, 255, 0.08);
+      --teal: #168078;
+      --teal-light: #209990;
+      --teal-soft: #E6F3F2;
+      --teal-dark-soft: rgba(32, 153, 144, 0.15);
+      --clay: #E05A47;
+      --clay-soft: #FDEEEB;
+      --clay-dark-soft: rgba(224, 90, 71, 0.18);
+      
+      --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    /* Base Setup */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      /* Faint 48px x 48px graph paper grid background */
+      background-image: 
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 48px 48px;
+      background-position: -1px -1px;
+    }
+
+    /* Tabular numbers for all monospaced elements */
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    /* ==========================================================================
+       TYPOGRAPHY & UTILITIES
+       ========================================================================== */
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--teal);
+      background: var(--teal-soft);
+      padding: 0.25rem 0.6rem;
+      border: 1px solid rgba(22, 128, 120, 0.3);
+      border-radius: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dark-section .section-tag {
+      color: #38D9CE;
+      background: var(--teal-dark-soft);
+      border-color: rgba(56, 217, 206, 0.3);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .dark-section .section-title {
+      color: var(--ink-light);
+    }
+
+    /* Standard Card Styling */
+    .report-card {
+      background: var(--panel);
+      border: 2px solid var(--grid);
+      border-radius: 2px;
+      padding: 1.75rem;
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .report-card:hover {
+      border-color: var(--teal);
+    }
+
+    .dark-section .report-card {
+      background: var(--slate-card);
+      border-color: var(--slate-border);
+      color: var(--ink-light);
+    }
+
+    .dark-section .report-card:hover {
+      border-color: var(--teal-light);
+    }
+
+    /* Focus States */
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 3px;
+    }
+
+    /* Fade-up Animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* ==========================================================================
+       STICKY TOP NAVIGATION
+       ========================================================================== */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--slate-deeper);
+      border-bottom: 2px solid var(--slate-border);
+      color: var(--ink-light);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      color: var(--ink-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-brand span {
+      color: #38D9CE;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      padding: 0.5rem 0.75rem;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--ink-light);
+      background: var(--slate-dark);
+    }
+
+    .nav-link.active {
+      color: #38D9CE;
+      font-weight: 600;
+      background: rgba(32, 153, 144, 0.15);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #38D9CE;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--slate-border);
+      color: var(--ink-light);
+      padding: 0.4rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Nav Overlay */
+    @media (max-width: 900px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--slate-deeper);
+        flex-direction: column;
+        padding: 1rem;
+        border-bottom: 2px solid var(--slate-border);
+        gap: 0.5rem;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-link.active::after {
+        display: none;
+      }
+    }
+
+    /* ==========================================================================
+       HERO SECTION (DARK SLATE BACKGROUND)
+       ========================================================================== */
+    .hero-section {
+      background-color: var(--slate-dark);
+      color: var(--ink-light);
+      padding: 4rem 0 3.5rem;
+      border-bottom: 2px solid var(--slate-border);
+      position: relative;
+      /* Grid background for dark section */
+      background-image: 
+        linear-gradient(var(--grid-dark) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-dark) 1px, transparent 1px);
+      background-size: 48px 48px;
+      background-position: -1px -1px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .hero-report-meta {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #38D9CE;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-report-meta .meta-badge {
+      background: var(--teal-dark-soft);
+      padding: 0.25rem 0.5rem;
+      border: 1px solid rgba(56, 217, 206, 0.3);
+      border-radius: 2px;
+    }
+
+    .hero-headline {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .hero-subhead {
+      font-size: 1.15rem;
+      color: var(--ink-muted);
+      max-width: 680px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subhead strong {
+      color: var(--ink-light);
+    }
+
+    /* KPI Strip */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--slate-card);
+      border: 2px solid var(--slate-border);
+      padding: 1.25rem 1rem;
+      border-radius: 2px;
+      text-align: center;
+      transition: border-color 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: #38D9CE;
+    }
+
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.25rem;
+    }
+
+    .kpi-val.highlight-teal {
+      color: #38D9CE;
+    }
+
+    .kpi-val.highlight-clay {
+      color: var(--clay);
+    }
+
+    .kpi-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Profile Side Card */
+    .profile-card {
+      background: var(--slate-card);
+      border: 2px solid var(--slate-border);
+      padding: 1.5rem;
+      border-radius: 2px;
+      text-align: center;
+    }
+
+    .profile-img-wrap {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1.25rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #38D9CE;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      background: var(--slate-deeper);
+    }
+
+    .profile-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-size: 1.4rem;
+      color: #FFFFFF;
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-title {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #38D9CE;
+      margin-bottom: 1.25rem;
+    }
+
+    .profile-contact-list {
+      list-style: none;
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      border-top: 1px solid var(--slate-border);
+      padding-top: 1rem;
+    }
+
+    .profile-contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      word-break: break-all;
+    }
+
+    .profile-contact-list li a {
+      color: var(--ink-light);
+      transition: color 0.2s;
+    }
+
+    .profile-contact-list li a:hover {
+      color: #38D9CE;
+    }
+
+    /* Responsive Hero */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-card {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-headline {
+        font-size: 2.2rem;
+      }
+      .kpi-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ==========================================================================
+       SECTION CONTAINERS & ALTERNATING STYLES
+       ========================================================================== */
+    section {
+      padding: 4.5rem 0;
+      border-bottom: 2px solid var(--grid);
+    }
+
+    section.dark-section {
+      background-color: var(--slate-dark);
+      color: var(--ink-light);
+      border-bottom-color: var(--slate-border);
+      background-image: 
+        linear-gradient(var(--grid-dark) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-dark) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* ==========================================================================
+       SECTION 01: ABOUT / QUICK FACTS
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .quick-facts-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+    }
+
+    .quick-facts-table tr {
+      border-bottom: 1px solid var(--grid);
+    }
+
+    .quick-facts-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .quick-facts-table td {
+      padding: 0.75rem 0.5rem;
+    }
+
+    .quick-facts-table td.label {
+      color: var(--ink-soft);
+      font-weight: 500;
+      width: 38%;
+    }
+
+    .quick-facts-table td.value {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .tech-pill {
+      display: inline-block;
+      background: var(--paper);
+      border: 1px solid var(--grid);
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      font-size: 0.78rem;
+      margin-right: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .dark-section .tech-pill {
+      background: var(--slate-deeper);
+      border-color: var(--slate-border);
+      color: var(--ink-light);
+    }
+
+    @media (max-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 02: EXPERIENCE
+       ========================================================================== */
+    .experience-card {
+      position: relative;
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--slate-border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .exp-role {
+      font-size: 1.3rem;
+      color: #FFFFFF;
+    }
+
+    .exp-company {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #38D9CE;
+    }
+
+    .exp-dates {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      background: var(--slate-deeper);
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      border: 1px solid var(--slate-border);
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .exp-bullets li {
+      position: relative;
+      padding-left: 1.5rem;
+      color: var(--ink-light);
+      font-size: 0.98rem;
+    }
+
+    .exp-bullets li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      top: 0.2rem;
+      font-size: 0.65rem;
+      color: #38D9CE;
+    }
+
+    .stat-badge {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #38D9CE;
+      background: rgba(56, 217, 206, 0.12);
+      padding: 0.1rem 0.4rem;
+      border-radius: 2px;
+    }
+
+    /* ==========================================================================
+       SECTION 03: EDUCATION
+       ========================================================================== */
+    .edu-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .edu-degree {
+      font-size: 1.3rem;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-school {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--teal);
+      margin-bottom: 1rem;
+    }
+
+    .edu-dates {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      background: var(--paper);
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--grid);
+      border-radius: 2px;
+    }
+
+    .course-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .course-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      background: var(--paper);
+      color: var(--ink-soft);
+      padding: 0.3rem 0.65rem;
+      border: 1px solid var(--grid);
+      border-radius: 2px;
+    }
+
+    /* ==========================================================================
+       SECTION 04: PROJECTS (SIGNATURE VISUALIZATION + LIGHTBOX CARDS)
+       ========================================================================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .project-card.featured-project {
+      grid-column: 1 / -1;
+      background: var(--slate-deeper);
+      border: 2px solid #38D9CE;
+    }
+
+    .project-img-box {
+      width: 100%;
+      height: 220px;
+      background: #1E252C;
+      border-bottom: 2px solid var(--slate-border);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .project-card.featured-project .project-img-box {
+      height: 280px;
+    }
+
+    .project-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.3s ease;
+    }
+
+    .project-img-box:hover img {
+      transform: scale(1.03);
+    }
+
+    .zoom-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 35, 44, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .project-img-box:hover .zoom-overlay {
+      opacity: 1;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .project-tools {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #38D9CE;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      font-size: 0.92rem;
+      color: var(--ink-muted);
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+
+    /* SIGNATURE CHART COMPONENT (Diverging Bar Chart) */
+    .signature-chart-box {
+      background: var(--slate-card);
+      border: 1px solid var(--slate-border);
+      padding: 1.25rem;
+      border-radius: 2px;
+      margin: 1rem 0 1.25rem;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+      border-bottom: 1px dashed var(--slate-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .chart-header-title {
+      color: #38D9CE;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .diverging-bar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .diverging-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 70px;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+
+    .diverging-label {
+      color: var(--ink-light);
+      font-weight: 500;
+    }
+
+    .diverging-track {
+      position: relative;
+      height: 24px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .diverging-center-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--slate-border);
+      z-index: 2;
+    }
+
+    .diverging-bar {
+      height: 16px;
+      border-radius: 2px;
+      position: relative;
+      transition: width 1s ease-out;
+    }
+
+    .diverging-bar.positive {
+      left: 50%;
+      background: linear-gradient(90deg, #168078, #38D9CE);
+    }
+
+    .diverging-bar.negative {
+      right: 50%;
+      position: absolute;
+      background: linear-gradient(270deg, #E05A47, #FF806E);
+    }
+
+    .diverging-val {
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .diverging-val.pos { color: #38D9CE; }
+    .diverging-val.neg { color: var(--clay); }
+
+    /* SQL Query Inspector Component */
+    .sql-code-box {
+      background: #1B2228;
+      border: 1px solid var(--slate-border);
+      padding: 1rem;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #A0B0C0;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+    }
+
+    .sql-code-box .kw { color: #FF7B72; font-weight: 700; }
+    .sql-code-box .fn { color: #79C0FF; }
+    .sql-code-box .str { color: #A5D6FF; }
+
+    /* ==========================================================================
+       SECTION 05: CERTIFICATIONS (VERIFIED 3 CERTIFICATES ONLY)
+       ========================================================================== */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .certs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cert-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .cert-img-box {
+      width: 100%;
+      height: 200px;
+      background: #EAEFF2;
+      border-bottom: 2px solid var(--grid);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cert-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .cert-img-box:hover img {
+      transform: scale(1.04);
+    }
+
+    .cert-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .cert-title {
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .cert-issuer {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+    }
+
+    .cert-meta {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .cert-btn {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--panel);
+      background: var(--slate-dark);
+      padding: 0.5rem 0.75rem;
+      border-radius: 2px;
+      transition: background 0.2s ease;
+    }
+
+    .cert-btn:hover {
+      background: var(--teal);
+    }
+
+    /* ==========================================================================
+       SECTION 06: SKILLS
+       ========================================================================== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .skill-cat-title {
+      font-size: 1.15rem;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--slate-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .skill-item {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      background: var(--slate-deeper);
+      color: var(--ink-light);
+      border: 1px solid var(--slate-border);
+      padding: 0.4rem 0.75rem;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .skill-item strong {
+      color: #38D9CE;
+    }
+
+    /* ==========================================================================
+       SECTION 07: ACHIEVEMENTS SCORECARD
+       ========================================================================== */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .achievements-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .achieve-card {
+      background: var(--panel);
+      border: 2px solid var(--grid);
+      padding: 1.5rem;
+      border-radius: 2px;
+      text-align: center;
+    }
+
+    .achieve-num {
+      font-family: var(--font-mono);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 0.3rem;
+    }
+
+    .achieve-label {
+      font-size: 0.95rem;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .achieve-subtext {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin-top: 0.25rem;
+    }
+
+    /* ==========================================================================
+       CONTACT SECTION (DARK SLATE FULL-BLEED)
+       ========================================================================== */
+    .contact-section {
+      background: var(--slate-deeper);
+      color: var(--ink-light);
+      padding: 5rem 0;
+      border-bottom: none;
+    }
+
+    .contact-card {
+      background: var(--slate-dark);
+      border: 2px solid var(--slate-border);
+      padding: 3rem 2rem;
+      border-radius: 2px;
+      max-width: 850px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-title {
+      font-size: 2.5rem;
+      color: #FFFFFF;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-subtitle {
+      font-size: 1.05rem;
+      color: var(--ink-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    @media (max-width: 600px) {
+      .contact-links-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-link-item {
+      background: var(--slate-deeper);
+      border: 1px solid var(--slate-border);
+      padding: 1rem 1.25rem;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      transition: border-color 0.2s;
+    }
+
+    .contact-link-item:hover {
+      border-color: #38D9CE;
+    }
+
+    .contact-info-label {
+      color: var(--ink-muted);
+      font-size: 0.75rem;
+      display: block;
+    }
+
+    .contact-info-val {
+      color: var(--ink-light);
+      font-weight: 600;
+    }
+
+    .copy-btn {
+      background: var(--slate-light);
+      border: none;
+      color: var(--ink-light);
+      padding: 0.35rem 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #38D9CE;
+      color: var(--slate-deeper);
+    }
+
+    /* Footer */
+    footer {
+      background: #1B2228;
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--slate-border);
+    }
+
+    /* ==========================================================================
+       MODAL LIGHTBOX FOR ENLARGING IMAGES
+       ========================================================================== */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(20, 26, 32, 0.92);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 88vh;
+      position: relative;
+      background: var(--slate-deeper);
+      border: 2px solid var(--slate-border);
+      padding: 0.5rem;
+      border-radius: 2px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      padding: 0.75rem 0.5rem 0.25rem;
+      text-align: center;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: var(--clay);
+      color: #FFFFFF;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       STICKY TOP NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="sticky-nav">
+    <div class="container nav-container">
+      <a href="#" class="nav-brand">
+        ANSH GUPTA <span>// DATA REPORT</span>
+      </a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">MENU ☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">01. About</a></li>
+        <li><a href="#experience" class="nav-link">02. Experience</a></li>
+        <li><a href="#education" class="nav-link">03. Education</a></li>
+        <li><a href="#projects" class="nav-link">04. Projects</a></li>
+        <li><a href="#certifications" class="nav-link">05. Certifications</a></li>
+        <li><a href="#skills" class="nav-link">06. Skills</a></li>
+        <li><a href="#achievements" class="nav-link">07. Achievements</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       HERO SECTION (DARK SLATE BACKGROUND)
+       ========================================================================== -->
+  <header class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-report-meta">
+            <span class="meta-badge">REPORT REF: AG-2026-ANALYTICS</span>
+            <span class="meta-badge">GURUGRAM, INDIA</span>
+            <span class="meta-badge">B.TECH IT GRADUATE</span>
+          </div>
+
+          <h1 class="hero-headline">Turning raw tables into decisions.</h1>
+
+          <p class="hero-subhead">
+            Data Analyst skilled in <strong>SQL, Excel, and Power BI</strong>. Specializing in ETL pipelines, statistical hypothesis testing, and executive BI dashboards. B.Tech in Information Technology graduate of Jaypee University of Information Technology (graduated May 2026).
+          </p>
+
+          <!-- KPI Strip -->
+          <div class="kpi-strip">
+            <div class="kpi-card">
+              <div class="kpi-val highlight-teal">500+</div>
+              <div class="kpi-label">Records Analyzed</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val highlight-teal">45%</div>
+              <div class="kpi-label">Reporting Accuracy Gain</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val highlight-clay">15+</div>
+              <div class="kpi-label">Hrs/Mo Saved</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val highlight-teal">50+</div>
+              <div class="kpi-label">SQL Queries Written</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="profile-img-wrap">
+            <img src="profile_picture/IMG-20250604-WA0002.jpg" alt="Ansh Gupta Profile Picture">
+          </div>
+          <h2 class="profile-name">Ansh Gupta</h2>
+          <div class="profile-title">Data Analyst</div>
+
+          <ul class="profile-contact-list">
+            <li>📍 Location: Gurugram, India</li>
+            <li>🎓 Jaypee UIT (May 2026)</li>
+            <li>📧 <a href="mailto:guptaansh0808@gmail.com">guptaansh0808@gmail.com</a></li>
+            <li>📞 <a href="tel:+918218083528">+91 8218083528</a></li>
+            <li>🔗 <a href="https://linkedin.com/in/annshgupta" target="_blank" rel="noopener">linkedin.com/in/annshgupta</a></li>
+            <li>💻 <a href="https://github.com/Uniquearena" target="_blank" rel="noopener">github.com/Uniquearena</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       SECTION 01: ABOUT / QUICK FACTS (LIGHT SECTION)
+       ========================================================================== -->
+  <section id="about" class="fade-up">
+    <div class="container">
+      <div class="section-tag">01 // PROFILE OVERVIEW</div>
+      <h2 class="section-title">About & Quick Facts</h2>
+
+      <div class="about-grid">
+        <div class="report-card">
+          <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Analytical Profile</h3>
+          <p style="color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 1rem;">
+            Analytical and detail-oriented Data Analyst with expertise in transforming complex, unstructured datasets into clear, actionable business insights. Proven track record in designing automated reporting workflows, constructing multi-page Power BI dashboards, and performing rigorous exploratory data analysis.
+          </p>
+          <p style="color: var(--ink-soft); font-size: 0.95rem;">
+            Focused on delivering measurable efficiency gains — whether by cutting reporting turnaround times, enhancing data integrity with validation rules, or surfacing hidden operational trends through SQL query optimization.
+          </p>
+        </div>
+
+        <div class="report-card">
+          <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Metadata Record</h3>
+          <table class="quick-facts-table">
+            <tr>
+              <td class="label">Location</td>
+              <td class="value">Gurugram, India</td>
+            </tr>
+            <tr>
+              <td class="label">Degree</td>
+              <td class="value">B.Tech, Information Technology</td>
+            </tr>
+            <tr>
+              <td class="label">University</td>
+              <td class="value">Jaypee University of Info. Tech.</td>
+            </tr>
+            <tr>
+              <td class="label">Graduated</td>
+              <td class="value">May 2026</td>
+            </tr>
+            <tr>
+              <td class="label">Core Stack</td>
+              <td class="value">
+                <span class="tech-pill mono">SQL</span>
+                <span class="tech-pill mono">Python</span>
+                <span class="tech-pill mono">Power BI</span>
+                <span class="tech-pill mono">Excel VBA</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">Contact</td>
+              <td class="value mono">+91 8218083528</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 02: EXPERIENCE (DARK SLATE SECTION)
+       ========================================================================== -->
+  <section id="experience" class="dark-section fade-up">
+    <div class="container">
+      <div class="section-tag">02 // WORK EXPERIENCE</div>
+      <h2 class="section-title">Professional Experience</h2>
+
+      <div class="report-card experience-card">
+        <div class="exp-header">
+          <div>
+            <h3 class="exp-role">Analytics Intern</h3>
+            <div class="exp-company">Coreline Solutions Inc. — Pune, Maharashtra</div>
+          </div>
+          <div class="exp-dates">June 2025 – Dec 2025</div>
+        </div>
+
+        <ul class="exp-bullets">
+          <li>
+            Performed employee attrition analysis on <span class="stat-badge">500+ employee records</span> using <strong>SQL</strong> and <strong>Python (Pandas, NumPy)</strong>, applying statistical hypothesis testing to identify key churn predictors and workforce risk factors.
+          </li>
+          <li>
+            Built automated KPI reporting pipelines using <strong>Excel VBA, Power Query</strong>, and <strong>Power BI</strong> with DAX measures and custom data validation rules — improved overall reporting accuracy by <span class="stat-badge">+45%</span> and cut manual reporting effort by <span class="stat-badge">15+ hrs/month</span>.
+          </li>
+          <li>
+            Designed robust ETL workflows for HR datasets: data normalization, missing-value imputation, and statistical outlier detection using <strong>IQR</strong> and <strong>Z-score</strong> methods.
+          </li>
+          <li>
+            Conducted thorough Exploratory Data Analysis (EDA) utilizing correlation matrices, feature distribution analysis, and time-series trend decomposition.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 03: EDUCATION (LIGHT SECTION)
+       ========================================================================== -->
+  <section id="education" class="fade-up">
+    <div class="container">
+      <div class="section-tag">03 // ACADEMIC BACKGROUND</div>
+      <h2 class="section-title">Education</h2>
+
+      <div class="report-card">
+        <div class="edu-card">
+          <div>
+            <h3 class="edu-degree">Bachelor of Technology (B.Tech) — Information Technology</h3>
+            <div class="edu-school">Jaypee University of Information Technology</div>
+            <p style="color: var(--ink-soft); font-size: 0.95rem;">
+              Full-time undergraduate engineering degree focused on data structures, database engineering, and statistical computing.
+            </p>
+          </div>
+          <div class="edu-dates">Sep 2022 – May 2026</div>
+        </div>
+
+        <div style="margin-top: 1.5rem; border-top: 1px solid var(--grid); padding-top: 1rem;">
+          <div style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 0.5rem;">
+            Relevant Coursework & Competencies:
+          </div>
+          <div class="course-tags">
+            <span class="course-tag">Database Management (DBMS)</span>
+            <span class="course-tag">Statistics & EDA</span>
+            <span class="course-tag">Data Analysis</span>
+            <span class="course-tag">Data Visualization</span>
+            <span class="course-tag">Computer Networks</span>
+            <span class="course-tag">Object-Oriented Programming (OOP)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 04: PROJECTS (DARK SLATE SECTION + SIGNATURE VISUALIZATION)
+       ========================================================================== -->
+  <section id="projects" class="dark-section fade-up">
+    <div class="container">
+      <div class="section-tag">04 // ANALYTICS PROJECTS</div>
+      <h2 class="section-title">Selected Data Projects (6 Total)</h2>
+
+      <div class="projects-grid">
+        
+        <!-- PROJECT 1: FEATURED WITH SIGNATURE DIVERGING BAR CHART VISUALIZATION -->
+        <div class="report-card project-card featured-project">
+          <div class="project-img-box" onclick="openLightbox('projects/real_estate_market_sales.PNG', 'Real Estate Market Sales Performance Dashboard')">
+            <img src="projects/real_estate_market_sales.PNG" alt="Real Estate Market Sales Performance Dashboard">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE DASHBOARD</div>
+          </div>
+          <div class="project-content">
+            <div class="project-title">
+              <span>01. Real Estate Market Sales Performance</span>
+              <span class="section-tag" style="margin:0;">FEATURED</span>
+            </div>
+            <div class="project-tools">STACK: Power BI · DAX · Time Intelligence · Scatter Anomaly Analysis</div>
+            <div class="project-desc">
+              Comprehensive 3-page Power BI report analyzing real estate transactions across regions. Features running Total-YTD sales measures, region ranking, and offer-vs-purchase price scatter plots for identifying valuation anomalies. Identified <strong>Zealand</strong> as the highest-revenue region at <strong>95bn</strong>.
+            </div>
+
+            <!-- SIGNATURE ELEMENT: DIVERGING BAR CHART VISUALIZATION -->
+            <div class="signature-chart-box">
+              <div class="chart-header">
+                <span class="chart-header-title">📊 SIGNATURE METRIC: YoY GROWTH BY SALES CATEGORY</span>
+                <span>REAL DATA CHART</span>
+              </div>
+              <div class="diverging-bar-container">
+                <!-- Auction Row -->
+                <div class="diverging-row">
+                  <span class="diverging-label">Auction Sales</span>
+                  <div class="diverging-track">
+                    <div class="diverging-center-line"></div>
+                    <div class="diverging-bar positive" style="width: 29%;"></div>
+                  </div>
+                  <span class="diverging-val pos">+29% YoY</span>
+                </div>
+                <!-- Family Row -->
+                <div class="diverging-row">
+                  <span class="diverging-label">Family Sales</span>
+                  <div class="diverging-track">
+                    <div class="diverging-center-line"></div>
+                    <div class="diverging-bar negative" style="width: 50%;"></div>
+                  </div>
+                  <span class="diverging-val neg">−75% YoY</span>
+                </div>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted); margin-top: 0.75rem; text-align: right;">
+                * Auction sales was the ONLY category displaying positive YoY growth (+29%).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 2: SQL QUERY ANALYSIS (CODE INSPECTOR) -->
+        <div class="report-card project-card">
+          <div class="project-content">
+            <div class="project-title">02. Employee & Department SQL Query Analysis</div>
+            <div class="project-tools">STACK: SQL Server · T-SQL · Relational Schema Normalization</div>
+            <div class="project-desc">
+              Designed a fully normalized employee–department–salary-grade relational database schema. Developed a suite of 50+ complex SQL queries leveraging multi-table JOINs, window functions, and subqueries to audit organizational salary segments and management hierarchies.
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #38D9CE; margin-top: auto;">
+              SQL CODE SAMPLE INSPECTOR:
+            </div>
+            <div class="sql-code-box">
+              <span class="kw">SELECT</span> d.dept_name, <span class="fn">AVG</span>(e.salary) <span class="kw">AS</span> avg_sal,<br>
+              &nbsp;&nbsp;<span class="fn">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> <span class="fn">AVG</span>(e.salary) <span class="kw">DESC</span>) <span class="kw">AS</span> sal_rank<br>
+              <span class="kw">FROM</span> employees e<br>
+              <span class="kw">JOIN</span> departments d <span class="kw">ON</span> e.dept_id = d.dept_id<br>
+              <span class="kw">GROUP BY</span> d.dept_name<br>
+              <span class="kw">HAVING</span> <span class="fn">COUNT</span>(e.emp_id) &gt; <span class="str">5</span>;
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 3: NYC COLLISION -->
+        <div class="report-card project-card">
+          <div class="project-img-box" onclick="openLightbox('projects/NYC_vehicle_colloison.PNG', 'NYC Vehicle Collision Analysis')">
+            <img src="projects/NYC_vehicle_colloison.PNG" alt="NYC Vehicle Collision Analysis">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE IMAGE</div>
+          </div>
+          <div class="project-content">
+            <div class="project-title">03. NYC Vehicle Collision Analysis</div>
+            <div class="project-tools">STACK: Advanced Excel · PivotTables · Data Cleaning · PivotCharts</div>
+            <div class="project-desc">
+              Processed 400+ collision records across NYC boroughs involving commercial vans and taxis. Built dynamic PivotTables and trend line PivotCharts to map temporal spike patterns, pinpointing driver inattention/distraction as the primary cause for 68% of incidents.
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 4: SALES PERFORMANCE DASHBOARD -->
+        <div class="report-card project-card">
+          <div class="project-img-box" onclick="openLightbox('projects/Sales_Performance_dashboard.PNG', 'Sales Performance Dashboard')">
+            <img src="projects/Sales_Performance_dashboard.PNG" alt="Sales Performance Dashboard">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE DASHBOARD</div>
+          </div>
+          <div class="project-content">
+            <div class="project-title">04. Sales Performance Dashboard</div>
+            <div class="project-tools">STACK: Power BI · Centralized DAX Measures · Map & Donut Visuals</div>
+            <div class="project-desc">
+              Single-page executive BI dashboard aggregating revenue by sales rep, geographic state, customer tier, and product category. Utilized a central DAX measure repository and interactive slicers for dynamic time-frame filtering.
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 5: PROCUREMENT SPEND ANALYSIS -->
+        <div class="report-card project-card">
+          <div class="project-img-box" onclick="openLightbox('projects/procurement_spend_analysis.PNG', 'Procurement Spend Analysis')">
+            <img src="projects/procurement_spend_analysis.PNG" alt="Procurement Spend Analysis">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE DASHBOARD</div>
+          </div>
+          <div class="project-content">
+            <div class="project-title">05. Procurement Spend Analysis</div>
+            <div class="project-tools">STACK: Power BI · Drill-Through Pages · Tooltips · Combo Charts</div>
+            <div class="project-desc">
+              3-page procurement analytics system tracking total spend, purchase order status (final vs. non-final), supplier breakdown, and package categories. Features customized drill-through detail pages and Year/Quarter/Month purchasing trend combo charts.
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 6: CAR PRICE PREDICTION -->
+        <div class="report-card project-card">
+          <div class="project-img-box" onclick="openLightbox('projects/Car_Price.PNG', 'Car Price Prediction Dashboard')">
+            <img src="projects/Car_Price.PNG" alt="Car Price Prediction Dashboard">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE DASHBOARD</div>
+          </div>
+          <div class="project-content">
+            <div class="project-title">06. Car Price Prediction Dashboard</div>
+            <div class="project-tools">STACK: Power BI · Predictive Modeling · Scatter Regression Analysis</div>
+            <div class="project-desc">
+              Evaluated actual vs. predicted vehicle MSRP models across makes and models (1,610 vehicles, $72.5K avg MSRP). Constructed regression scatter plots comparing horsepower and torque against pricing with multi-attribute slicers.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 05: CERTIFICATIONS (LIGHT SECTION — VERIFIED 3 CERTIFICATES)
+       ========================================================================== -->
+  <section id="certifications" class="fade-up">
+    <div class="container">
+      <div class="section-tag">05 // VERIFIED CREDENTIALS</div>
+      <h2 class="section-title">Certifications (3 Verified)</h2>
+
+      <div class="certs-grid">
+
+        <!-- CERTIFICATE 1: SQL AMPLIFYDREAMS -->
+        <div class="report-card cert-card">
+          <div class="cert-img-box" onclick="openLightbox('certificates/amplifydreams.PNG', 'SQL Certification Training — Amplifydreams')">
+            <img src="certificates/amplifydreams.PNG" alt="SQL Certification Training Certificate">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE</div>
+          </div>
+          <div class="cert-body">
+            <h3 class="cert-title">SQL Certification Training</h3>
+            <div class="cert-issuer">Amplifydreams</div>
+            <div class="cert-meta">
+              <span>📅 Issued: July 2025</span>
+              <span>🔑 Credential ID: RKAAD51CXC</span>
+            </div>
+            <a href="https://www.amplifydreams.com/course/certverify/RKAAD51CXC" target="_blank" rel="noopener" class="cert-btn">
+              VERIFY CREDENTIAL ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- CERTIFICATE 2: POWER BI OFFICE MASTER -->
+        <div class="report-card cert-card">
+          <div class="cert-img-box" onclick="openLightbox('certificates/office_master_powerbi.PNG', 'Power BI Workshop — Office Master')">
+            <img src="certificates/office_master_powerbi.PNG" alt="Power BI Workshop Certificate">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE</div>
+          </div>
+          <div class="cert-body">
+            <h3 class="cert-title">Power BI Workshop</h3>
+            <div class="cert-issuer">Office Master (QM)</div>
+            <div class="cert-meta">
+              <span>📅 Issued: June 18, 2025</span>
+              <span>🔑 Credential ID: i2</span>
+            </div>
+            <a href="https://certx.in/certificate/36a28147-6eed-47a5-8342-e5f926ebba61443363" target="_blank" rel="noopener" class="cert-btn">
+              VERIFY CREDENTIAL ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- CERTIFICATE 3: DELOITTE AUSTRALIA -->
+        <div class="report-card cert-card">
+          <div class="cert-img-box" onclick="openLightbox('certificates/deloitte.PNG', 'Deloitte Australia Data Analytics Job Simulation')">
+            <img src="certificates/deloitte.PNG" alt="Deloitte Australia Job Simulation Certificate">
+            <div class="zoom-overlay">🔍 CLICK TO ENLARGE</div>
+          </div>
+          <div class="cert-body">
+            <h3 class="cert-title">Data Analytics Job Simulation</h3>
+            <div class="cert-issuer">Deloitte Australia — Forage</div>
+            <div class="cert-meta">
+              <span>📅 Issued: June 17, 2025</span>
+              <span>🏷️ Tech: Data Analysis & Forensic Tech</span>
+            </div>
+            <a href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_kHp49fzwivBvHZaeY_1750159947366_completion_certificate.pdf" target="_blank" rel="noopener" class="cert-btn">
+              VIEW CERTIFICATE PDF ↗
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 06: SKILLS MATRIX (DARK SLATE SECTION)
+       ========================================================================== -->
+  <section id="skills" class="dark-section fade-up">
+    <div class="container">
+      <div class="section-tag">06 // TECHNICAL SKILLS</div>
+      <h2 class="section-title">Skills & Tooling Matrix</h2>
+
+      <div class="skills-grid">
+        
+        <!-- Category 1: Languages -->
+        <div class="report-card">
+          <h3 class="skill-cat-title">💻 Programming & Query Languages</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><strong>SQL</strong> (Joins, Subqueries, Aggregates, Grouping)</li>
+            <li class="skill-item"><strong>Python</strong> (Pandas, NumPy, EDA Scripts)</li>
+            <li class="skill-item"><strong>T-SQL</strong> (Stored Procedures & Views)</li>
+          </ul>
+        </div>
+
+        <!-- Category 2: BI & Visualization -->
+        <div class="report-card">
+          <h3 class="skill-cat-title">📊 Business Intelligence & Dashboards</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><strong>Power BI</strong> (DAX, Data Modeling, Drill-Through)</li>
+            <li class="skill-item"><strong>Tableau</strong> (Workbooks & Interactive Views)</li>
+            <li class="skill-item"><strong>Advanced Excel</strong> (VBA, Power Query, PivotTables)</li>
+          </ul>
+        </div>
+
+        <!-- Category 3: Analytics & Statistics -->
+        <div class="report-card">
+          <h3 class="skill-cat-title">📈 Statistical Analysis & Methodologies</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><strong>Hypothesis Testing</strong> (z-score, p-values)</li>
+            <li class="skill-item"><strong>Correlation Analysis</strong> (Pearson Matrix)</li>
+            <li class="skill-item"><strong>Outlier Detection</strong> (IQR / Z-Score)</li>
+            <li class="skill-item"><strong>ETL Pipelines</strong> (Data Cleaning & Normalization)</li>
+          </ul>
+        </div>
+
+        <!-- Category 4: Tools & Environments -->
+        <div class="report-card">
+          <h3 class="skill-cat-title">🛠️ Tools & Infrastructure</h3>
+          <ul class="skill-list">
+            <li class="skill-item"><strong>SQL Server Management Studio</strong></li>
+            <li class="skill-item"><strong>Jupyter Notebook</strong></li>
+            <li class="skill-item"><strong>Git & GitHub</strong></li>
+            <li class="skill-item"><strong>Power Query Editor</strong></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 07: ACHIEVEMENTS SCORECARD (LIGHT SECTION)
+       ========================================================================== -->
+  <section id="achievements" class="fade-up">
+    <div class="container">
+      <div class="section-tag">07 // QUANTIFIED RESULTS</div>
+      <h2 class="section-title">Impact & Achievements</h2>
+
+      <div class="achievements-grid">
+        <div class="achieve-card">
+          <div class="achieve-num">45%</div>
+          <div class="achieve-label">Reporting Accuracy Improvement</div>
+          <div class="achieve-subtext">Achieved via automated VBA & Power BI validation rules</div>
+        </div>
+
+        <div class="achieve-card">
+          <div class="achieve-num">15+</div>
+          <div class="achieve-label">Hours / Month Saved</div>
+          <div class="achieve-subtext">Eliminated manual Excel reporting overhead</div>
+        </div>
+
+        <div class="achieve-card">
+          <div class="achieve-num">95bn</div>
+          <div class="achieve-label">Highest Regional Revenue</div>
+          <div class="achieve-subtext">Identified Zealand market leadership in Real Estate report</div>
+        </div>
+
+        <div class="achieve-card">
+          <div class="achieve-num">500+</div>
+          <div class="achieve-label">HR Employee Records Processed</div>
+          <div class="achieve-subtext">Analyzed for attrition predictors using SQL & Python</div>
+        </div>
+
+        <div class="achieve-card">
+          <div class="achieve-num">50+</div>
+          <div class="achieve-label">SQL Queries Developed</div>
+          <div class="achieve-subtext">Multi-table JOINs, subqueries, and hierarchy audits</div>
+        </div>
+
+        <div class="achieve-card">
+          <div class="achieve-num">400+</div>
+          <div class="achieve-label">Collision Records Analyzed</div>
+          <div class="achieve-subtext">NYC Borough collision analysis highlighting primary causes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CONTACT SECTION (DARK SLATE FULL-BLEED)
+       ========================================================================== -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="contact-card fade-up">
+        <div class="section-tag" style="margin-bottom: 1rem;">GET IN TOUCH</div>
+        <h2 class="contact-title">Let's talk data.</h2>
+        <p class="contact-subtitle">
+          Open for Data Analyst, Business Intelligence, and Data Analytics opportunities. Feel free to reach out via email or phone!
+        </p>
+
+        <div class="contact-links-grid">
+          <!-- Email Link -->
+          <div class="contact-link-item">
+            <div>
+              <span class="contact-info-label">EMAIL ADDRESS</span>
+              <a href="mailto:guptaansh0808@gmail.com" class="contact-info-val">guptaansh0808@gmail.com</a>
+            </div>
+            <button class="copy-btn" onclick="copyText('guptaansh0808@gmail.com', this)">COPY</button>
+          </div>
+
+          <!-- Phone Link -->
+          <div class="contact-link-item">
+            <div>
+              <span class="contact-info-label">PHONE NUMBER</span>
+              <a href="tel:+918218083528" class="contact-info-val">+91 8218083528</a>
+            </div>
+            <button class="copy-btn" onclick="copyText('+918218083528', this)">COPY</button>
+          </div>
+
+          <!-- LinkedIn Link -->
+          <div class="contact-link-item">
+            <div>
+              <span class="contact-info-label">LINKEDIN PROFILE</span>
+              <a href="https://linkedin.com/in/annshgupta" target="_blank" rel="noopener" class="contact-info-val">linkedin.com/in/annshgupta ↗</a>
+            </div>
+          </div>
+
+          <!-- GitHub Link -->
+          <div class="contact-link-item">
+            <div>
+              <span class="contact-info-label">GITHUB REPOSITORY</span>
+              <a href="https://github.com/Uniquearena" target="_blank" rel="noopener" class="contact-info-val">github.com/Uniquearena ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer>
+    <div class="container">
+      Ansh Gupta — Data Analyst Portfolio Report &copy; 2026. Gurugram, India.
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL LIGHTBOX COMPONENT
+       ========================================================================== -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightboxDirect()">✕</button>
+      <img id="lightboxImg" src="" alt="Enlarged view">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       INTERACTIVE JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    // 1. Mobile Navigation Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    // Close mobile menu when a nav link is clicked
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // 2. IntersectionObserver for Scroll-Spy Active Nav States
+    const sections = document.querySelectorAll('header, section');
+    const navItems = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    };
+
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const currentId = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === `#${currentId}`) {
+              item.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => spyObserver.observe(section));
+
+    // 3. Fade-up scroll reveal observer
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => fadeObserver.observe(el));
+
+    // 4. Modal Lightbox Functionality
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+
+    function openLightbox(src, caption) {
+      lightboxImg.src = src;
+      lightboxCaption.textContent = caption;
+      lightboxModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightboxDirect() {
+      lightboxModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function closeLightbox(e) {
+      if (e.target === lightboxModal) {
+        closeLightboxDirect();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightboxModal.classList.contains('active')) {
+        closeLightboxDirect();
+      }
+    });
+
+    // 5. Copy Text Tooltip Helper
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'COPIED!';
+        btn.style.background = '#38D9CE';
+        btn.style.color = '#2B353E';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
